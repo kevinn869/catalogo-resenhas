@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['logado'])) {
-    header('Location: login.html');
+    header('Location: login.php');
     exit;
 }
 
@@ -26,13 +26,22 @@ foreach ($itens as $item) {
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <?php if ($itemSelecionado): ?>
-        <h1><?php echo $itemSelecionado['titulo']; ?></h1>
-        <img src="<?php echo $itemSelecionado['imagem']; ?>" alt="" width="200">
-        <p><strong>Categoria:</strong> <?php echo $itemSelecionado['categoria']; ?></p>
-        <p><strong>Tipo:</strong> <?php echo $itemSelecionado['tipo']; ?></p>
-        <p><strong>Resenha:</strong> <?php echo $itemSelecionado['resenha']; ?></p>
-        <a href="index.php">← Voltar ao catálogo</a>
+<?php if ($itemSelecionado): ?>
+        <div class="detalhes-container">
+            <div class="detalhes-card">
+                <img src="<?php echo $itemSelecionado['imagem']; ?>" alt="" class="detalhes-imagem">
+                <div class="detalhes-info">
+                    <h1><?php echo $itemSelecionado['titulo']; ?></h1>
+                    <p><strong>Categoria:</strong> <?php echo $itemSelecionado['categoria']; ?></p>
+                    <p><strong>Tipo:</strong> <?php echo $itemSelecionado['tipo']; ?></p>
+                    <div class="detalhes-resenha">
+                        <h3>Resenha</h3>
+                        <p><?php echo $itemSelecionado['resenha']; ?></p>
+                    </div>
+                    <a href="index.php" class="botao-voltar">← Voltar ao catálogo</a>
+                </div>
+            </div>
+        </div>
     <?php else: ?>
         <p>Item não encontrado.</p>
     <?php endif; ?>

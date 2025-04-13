@@ -1,53 +1,47 @@
 <?php
-session_start();
-
-include 'usuarios.php';
-
+// cadastrar.php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $novoUsuario = $_POST['usuario'];
-  $novaSenha = $_POST['senha'];
+    $usuario = trim($_POST['usuario']);
+    $senha = password_hash(trim($_POST['senha']), PASSWORD_DEFAULT);
 
-
-  if (!isset($_SESSION['usuariosExtras'])) {
-    $_SESSION['usuariosExtras'] = [];
-  }
-
-
-  foreach ($usuarios as $u) {
-    if ($u['usuario'] === $novoUsuario) {
-      echo "<script>alert('Usuário já existe!'); window.location.href='cadastrar.php';</script>";
-      exit;
+    if ($usuario && $senha) {
+        $linha = $usuario . '|' . $senha . PHP_EOL;
+        file_put_contents('usuarios.txt', $linha, FILE_APPEND);
+        header('Location: login.html?cadastro=ok');
+        exit;
+    } else {
+        $erro = "Preencha todos os campos!";
     }
-  }
-
-  $_SESSION['usuariosExtras'][] = [
-    'usuario' => $novoUsuario,
-    'senha' => password_hash($novaSenha, PASSWORD_DEFAULT)
-  ];
-
-  echo "<script>alert('Usuário cadastrado com sucesso!'); window.location.href='login.html';</script>";
-  exit;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Cadastrar Novo Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
-<body>
-  <div class="login-container">
-    <h2>Criar Conta</h2>
-    <form method="POST" class="login-form">
-      <input type="text" name="usuario" placeholder="Usuário" required>
-      <input type="password" name="senha" placeholder="Senha" required>
-      <button type="submit">Cadastrar</button>
-    </form>
-  </div>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow p-4 mx-auto" style="max-width: 400px;">
+            <h3 class="mb-4 text-center">Cadastrar Novo Usuário</h3>
+            <?php if (!empty($erro)): ?>
+                <div class="alert alert-danger"><?php echo $erro; ?></div>
+            <?php endif; ?>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="usuario" class="form-label">Usuário</label>
+                    <input type="text" name="usuario" id="usuario" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input type="password" name="senha" id="senha" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Cadastrar</button>
+                <a href="login.html" class="btn btn-link mt-3 w-100 text-center">Voltar para Login</a>
+            </form>
+        </div>
+    </div>
 </body>
-
 </html>

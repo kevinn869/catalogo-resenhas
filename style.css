@@ -1,4 +1,3 @@
-/* Reset e base */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,7 +13,7 @@ body {
   justify-content: center;
 }
 
-/* Container do login */
+
 .login-container {
   background: white;
   padding: 40px 30px;
@@ -26,7 +25,7 @@ body {
   animation: fadeIn 0.8s ease-in-out;
 }
 
-/* Animação */
+
 @keyframes fadeIn {
   from {
       transform: translateY(-20px);
@@ -38,14 +37,15 @@ body {
   }
 }
 
-/* Título */
+
+Título 
 .login-container h2 {
   margin-bottom: 25px;
   color: #333;
   font-size: 26px;
 }
 
-/* Formulário */
+ Formulário 
 .login-form input {
   display: block;
   width: 100%;
@@ -63,7 +63,7 @@ body {
   box-shadow: 0 0 5px rgba(42, 82, 152, 0.3);
 }
 
-/* Botão */
+ Botão 
 .login-form button {
   width: 100%;
   padding: 12px;
